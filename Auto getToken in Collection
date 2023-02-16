@@ -1,0 +1,25 @@
+pm.sendRequest({
+    url: 'https://site.ru/api/auth/login',
+    method: 'POST',
+    header: {
+        "Content-Type": "application/json"
+    },
+    body:
+    {
+        mode: 'raw',
+        raw: JSON.stringify(
+            {
+        //креды авторизации
+            "email": "login123",
+            "password": "password123"
+            })
+    }
+},
+    function (err, res) {
+        let response = res.json();
+        pm.expect(res).to.have.property('code', 200);
+        pm.collectionVariables.set("Token", response.token); 
+        //Token - назввание переменной в коллекции, подставить в bearer auth
+        //response.token - token название параметра в ответе
+    }
+)
